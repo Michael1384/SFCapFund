@@ -1,0 +1,27 @@
+/* [project]/src/components/TextType/TextType.css [app-client] (css) */
+.text-type {
+  white-space: pre-wrap;
+  display: inline-block;
+}
+
+.text-type__cursor {
+  margin-left: .05em;
+  animation: 1s step-start infinite cursor-blink;
+  display: inline-block;
+}
+
+@keyframes cursor-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.text-type__cursor--hidden {
+  display: none;
+}
+
+/*# sourceMappingURL=src_components_TextType_TextType_7feb6ec4.css.map*/

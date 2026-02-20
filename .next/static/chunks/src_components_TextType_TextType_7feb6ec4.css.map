@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///Users/michaeldeng/Desktop/SfCapFund/src/components/TextType/TextType.css"],"sourcesContent":[".text-type {\n  display: inline-block;\n  white-space: pre-wrap;\n}\n\n.text-type__cursor {\n  margin-left: 0.05em;\n  display: inline-block;\n  animation: cursor-blink 1s step-start infinite;\n}\n\n@keyframes cursor-blink {\n  0%, 100% { opacity: 1; }\n  50%       { opacity: 0; }\n}\n\n.text-type__cursor--hidden {\n  display: none;\n}\n"],"names":[],"mappings":"AAAA;;;;;AAKA;;;;;;AAMA;;;;;;;;;;AAKA","debugId":null}}]
+}

@@ -1,0 +1,134 @@
+'use client';
+
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import './TextType.css';
+
+interface TextTypeProps extends React.HTMLAttributes<HTMLSpanElement> {
+  text: string | string[];
+  typingSpeed?: number;
+  initialDelay?: number;
+  pauseDuration?: number;
+  deletingSpeed?: number;
+  loop?: boolean;
+  showCursor?: boolean;
+  hideCursorWhileTyping?: boolean;
+  cursorCharacter?: string;
+  cursorClassName?: string;
+  cursorBlinkDuration?: number;
+  textColors?: string[];
+  variableSpeed?: { min: number; max: number } | false;
+  onSentenceComplete?: (sentence: string, index: number) => void;
+  startOnVisible?: boolean;
+  reverseMode?: boolean;
+}
+
+const TextType = ({
+  text,
+  typingSpeed = 50,
+  initialDelay = 0,
+  pauseDuration = 2000,
+  deletingSpeed = 30,
+  loop = true,
+  className = '',
+  style,
+  showCursor = true,
+  hideCursorWhileTyping = false,
+  cursorCharacter = '|',
+  cursorClassName = '',
+  cursorBlinkDuration: _cursorBlinkDuration,
+  textColors = [],
+  variableSpeed,
+  onSentenceComplete,
+  startOnVisible = false,
+  reverseMode = false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ...props
+}: TextTypeProps) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentCharIndex, setCurrentCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(!startOnVisible);
+  const containerRef = useRef<HTMLSpanElement | null>(null);
+
+  const textArray = useMemo(() => (Array.isArray(text) ? text : [text]), [text]);
+
+  const getRandomSpeed = useCallback(() => {
+    if (!variableSpeed) return typingSpeed;
+    const { min, max } = variableSpeed;
+    return Math.random() * (max - min) + min;
+  }, [variableSpeed, typingSpeed]);
+
+  const getCurrentTextColor = () => {
+    if (textColors.length === 0) return 'inherit';
+    return textColors[currentTextIndex % textColors.length];
+  };
+
+  useEffect(() => {
+    if (!startOnVisible || !containerRef.current) return;
+    const observer = new IntersectionObserver(
+      entries => { entries.forEach(e => { if (e.isIntersecting) setIsVisible(true); }); },
+      { threshold: 0.1 }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [startOnVisible]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    const currentText = textArray[currentTextIndex] ?? '';
+    const processedText = reverseMode ? currentText.split('').reverse().join('') : currentText;
+
+    const run = () => {
+      if (isDeleting) {
+        if (displayedText === '') {
+          setIsDeleting(false);
+          if (onSentenceComplete) onSentenceComplete(textArray[currentTextIndex] ?? '', currentTextIndex);
+          if (currentTextIndex === textArray.length - 1 && !loop) return;
+          setCurrentTextIndex(prev => (prev + 1) % textArray.length);
+          setCurrentCharIndex(0);
+        } else {
+          timeout = setTimeout(() => { setDisplayedText(prev => prev.slice(0, -1)); }, deletingSpeed);
+        }
+      } else {
+        if (currentCharIndex < processedText.length) {
+          timeout = setTimeout(() => {
+            setDisplayedText(prev => prev + processedText[currentCharIndex]);
+            setCurrentCharIndex(prev => prev + 1);
+          }, variableSpeed ? getRandomSpeed() : typingSpeed);
+        } else {
+          if (!loop && currentTextIndex === textArray.length - 1) return;
+          timeout = setTimeout(() => setIsDeleting(true), pauseDuration);
+        }
+      }
+    };
+
+    if (currentCharIndex === 0 && !isDeleting && displayedText === '') {
+      timeout = setTimeout(run, initialDelay);
+    } else {
+      run();
+    }
+    return () => { if (timeout) clearTimeout(timeout); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentCharIndex, displayedText, isDeleting, textArray, currentTextIndex, isVisible]);
+
+  const shouldHideCursor =
+    hideCursorWhileTyping &&
+    (currentCharIndex < (textArray[currentTextIndex]?.length ?? 0) || isDeleting);
+
+  return (
+    <span ref={containerRef} className={`text-type ${className}`} style={style}>
+      <span className="text-type__content" style={{ color: getCurrentTextColor() }}>
+        {displayedText}
+      </span>
+      {showCursor && (
+        <span className={`text-type__cursor ${cursorClassName} ${shouldHideCursor ? 'text-type__cursor--hidden' : ''}`}>
+          {cursorCharacter}
+        </span>
+      )}
+    </span>
+  );
+};
+
+export default TextType;

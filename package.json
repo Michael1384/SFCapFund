@@ -1,0 +1,30 @@
+{
+  "name": "sfcapfund",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.97.0",
+    "framer-motion": "^11",
+    "gsap": "^3.12.5",
+    "lucide-react": "latest",
+    "next": "^15",
+    "react": "^19",
+    "react-countup": "^6",
+    "react-dom": "^19",
+    "recharts": "^2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

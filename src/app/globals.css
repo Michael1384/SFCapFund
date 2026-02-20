@@ -1,0 +1,702 @@
+@import "tailwindcss";
+
+/* ============================================================
+   SF CAPITAL — Design System
+   ============================================================ */
+
+:root {
+  --bg:            #09090b;
+  --bg-subtle:     #0f0f12;
+  --bg-raised:     #141418;
+  --border:        rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
+
+  --text-primary:   #f4f4f5;
+  --text-secondary: rgba(244, 244, 245, 0.50);
+  --text-tertiary:  rgba(244, 244, 245, 0.28);
+
+  --accent:       #9b1239;
+  --accent-dim:   rgba(155, 18, 57, 0.12);
+  --accent-text:  #f43f5e;
+
+  --gain:     #22c55e;
+  --gain-dim: rgba(34, 197, 94, 0.08);
+  --loss:     #ef4444;
+  --loss-dim: rgba(239, 68, 68, 0.08);
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  --transition: 140ms ease;
+
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;
+  --space-4: 16px;  --space-5: 24px;  --space-6: 32px;
+  --space-7: 48px;  --space-8: 64px;  --space-9: 96px;
+  --space-10: 128px;
+
+  --text-xs:   11px;  --text-sm:  13px;  --text-base: 15px;
+  --text-md:   17px;  --text-lg:  20px;  --text-xl:   24px;
+  --text-2xl:  32px;  --text-3xl: 44px;  --text-4xl:  60px;
+  --text-5xl:  76px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── Container ── */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+}
+
+/* ── Surfaces ── */
+.surface {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* ── Typography utilities ── */
+.eyebrow {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.metric-value {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 1px solid transparent;
+}
+.badge-gain    { color: var(--gain);          background: var(--gain-dim);   border-color: rgba(34,197,94,0.15); }
+.badge-loss    { color: var(--loss);          background: var(--loss-dim);   border-color: rgba(239,68,68,0.15); }
+.badge-neutral { color: var(--text-secondary);background: rgba(255,255,255,0.04); border-color: var(--border); }
+.badge-accent  { color: var(--accent-text);   background: var(--accent-dim); border-color: rgba(155,18,57,0.20); }
+
+/* ── Ticker tag ── */
+.ticker-tag {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 700;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  letter-spacing: 0.05em;
+  color: var(--accent-text);
+  background: var(--accent-dim);
+  border: 1px solid rgba(155,18,57,0.18);
+}
+
+/* ── Button ── */
+.btn {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+  white-space: nowrap;
+  text-decoration: none;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border);
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.04);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.btn-ghost.active {
+  background: var(--accent-dim);
+  color: var(--accent-text);
+  border-color: rgba(155,18,57,0.22);
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.btn-primary:hover { background: #b01340; }
+
+/* ── Table ── */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th {
+  font-size: var(--text-xs); font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.data-table th.right, .data-table td.right { text-align: right; }
+.data-table td {
+  font-size: var(--text-sm);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+.data-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+.data-table tbody tr:last-child td { border-bottom: none; }
+
+/* ── Section divider ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--space-8) 0;
+}
+
+/* ── Live dot ── */
+.live-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gain);
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+  animation: live-pulse 1.8s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(34, 197, 94, 0.5); }
+  60%  { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0);   }
+  100% { box-shadow: 0 0 0 0   rgba(34, 197, 94, 0);   }
+}
+
+/* ── Ticker tape ── */
+.ticker-track {
+  display: flex;
+  animation: ticker-scroll 55s linear infinite;
+  width: max-content;
+}
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Nav link hover ── */
+.nav-item { transition: color 200ms ease; }
+.nav-item:hover { color: var(--text-primary) !important; }
+
+/* ── Footer link hover (no JS needed) ── */
+.footer-link { color: var(--text-secondary); transition: color var(--transition); }
+.footer-link:hover { color: var(--text-primary); }
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.20); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: flex !important; }
+  .container   { padding-left: var(--space-5); padding-right: var(--space-5); }
+}
+@media (min-width: 769px) { .show-mobile { display: none !important; } }
+
+
+/* ============================================================
+   SF CAPITAL — Design System
+   Philosophy: editorial, institutional, typographically strong
+   ============================================================ */
+
+/* ── CSS Variables ─────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --bg:           #0a0c10;
+  --bg-subtle:    #0f1117;
+  --bg-raised:    #13161e;
+  --border:       rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  /* Typography */
+  --text-primary:   #e8eaf0;
+  --text-secondary: rgba(232, 234, 240, 0.55);
+  --text-tertiary:  rgba(232, 234, 240, 0.30);
+
+  /* Accent — ONE color only */
+  --accent:       #c0003a;
+  --accent-dim:   rgba(192, 0, 58, 0.15);
+  --accent-text:  #e05575;
+
+  /* Semantic */
+  --gain:         #22c55e;
+  --gain-dim:     rgba(34, 197, 94, 0.10);
+  --loss:         #ef4444;
+  --loss-dim:     rgba(239, 68, 68, 0.10);
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* Type scale */
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-base: 15px;
+  --text-md:   17px;
+  --text-lg:   20px;
+  --text-xl:   24px;
+  --text-2xl:  32px;
+  --text-3xl:  40px;
+  --text-4xl:  56px;
+
+  /* Radius */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+
+  /* Transitions */
+  --transition: 150ms ease;
+}
+
+/* ── Reset & Base ──────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Typography ────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* ── Container ─────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1160px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+}
+
+/* ── Surface ───────────────────────────────────────────── */
+/* Single card primitive — replaces all glass/glow variants */
+.surface {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.surface-subtle {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* ── Label / eyebrow text ──────────────────────────────── */
+.eyebrow {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* ── Metric display number ─────────────────────────────── */
+.metric-value {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+/* ── Pill / badge ──────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+}
+
+.badge-gain {
+  color: var(--gain);
+  background: var(--gain-dim);
+  border-color: rgba(34, 197, 94, 0.20);
+}
+
+.badge-loss {
+  color: var(--loss);
+  background: var(--loss-dim);
+  border-color: rgba(239, 68, 68, 0.20);
+}
+
+.badge-neutral {
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.04);
+  border-color: var(--border);
+}
+
+.badge-accent {
+  color: var(--accent-text);
+  background: var(--accent-dim);
+  border-color: rgba(192, 0, 58, 0.25);
+}
+
+/* ── Ticker tag ────────────────────────────────────────── */
+.ticker-tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  letter-spacing: 0.06em;
+  color: var(--accent-text);
+  background: var(--accent-dim);
+  border: 1px solid rgba(192, 0, 58, 0.20);
+}
+
+/* ── Section divider ───────────────────────────────────── */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--space-7) 0;
+}
+
+/* ── Nav link ──────────────────────────────────────────── */
+.nav-link {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-link.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent);
+}
+
+/* ── Table ─────────────────────────────────────────────── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table th.right,
+.data-table td.right {
+  text-align: right;
+}
+
+.data-table td {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+
+.data-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ── Button ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.btn-ghost.active {
+  background: var(--accent-dim);
+  color: var(--accent-text);
+  border-color: rgba(192, 0, 58, 0.25);
+}
+
+/* ── Ticker tape ────────────────────────────────────────── */
+.ticker-track {
+  display: flex;
+  animation: ticker-scroll 60s linear infinite;
+  width: max-content;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Live dot ───────────────────────────────────────────── */
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gain);
+  animation: live-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* ── Focus ring ─────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+
+/* ── Monospace numbers ──────────────────────────────────── */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ── Mobile nav ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: flex !important; }
+  .container   { padding-left: var(--space-5); padding-right: var(--space-5); }
+}
+
+@media (min-width: 769px) {
+  .show-mobile { display: none !important; }
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #080a0f;
+  color: #e8eaf0;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+}
+
+.glass-maroon {
+  background: rgba(139, 0, 48, 0.07);
+  border: 1px solid rgba(139, 0, 48, 0.18);
+  backdrop-filter: blur(20px);
+}
+
+.gradient-text-maroon {
+  background: linear-gradient(135deg, #ffffff 0%, #e06f88 45%, #8b0030 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.label-text {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Ticker scroll animation */
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  display: flex;
+  animation: ticker-scroll 50s linear infinite;
+  width: max-content;
+}
+
+/* Pulse dot */
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Float animation for orbs */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.float-orb {
+  animation: float 6s ease-in-out infinite;
+}
+
+.float-orb-slow {
+  animation: float 9s ease-in-out infinite;
+}
+
+/* Shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-border {
+  background: linear-gradient(
+    90deg,
+    rgba(139, 0, 48, 0) 0%,
+    rgba(139, 0, 48, 0.4) 50%,
+    rgba(139, 0, 48, 0) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 0, 48, 0.4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 0, 48, 0.7);
+}
