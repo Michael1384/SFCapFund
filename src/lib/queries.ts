@@ -124,13 +124,19 @@ export async function getPortfolios(): Promise<Portfolio[]> {
   if (error || !portRows?.length) return SEED_PORTFOLIOS;
 
   return (portRows as PortfolioRow[]).map((p: PortfolioRow): Portfolio => ({
-    id:           p.id as PortfolioId,
-    name:         p.name,
-    description:  p.description,
-    inception:    p.inception,
-    targetReturn: p.target_return,
-    strategy:     p.strategy,
-    holdingIds:   p.portfolio_holdings.map((ph: { holding_id: string }) => ph.holding_id),
+    id:                p.id as PortfolioId,
+    name:              p.name,
+    tagline:           '',
+    description:       p.description,
+    overview:          p.description,
+    coverage:          [],
+    strategyPoints:    [],
+    inception:         p.inception ?? '',
+    initialAUM:        50000,
+    targetReturn:      p.target_return ?? '',
+    strategy:          p.strategy,
+    holdingIds:        p.portfolio_holdings.map((ph: { holding_id: string }) => ph.holding_id),
+    accentColor:       '#8b0030',
   }));
 }
 
