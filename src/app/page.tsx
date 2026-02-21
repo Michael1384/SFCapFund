@@ -120,7 +120,7 @@ export default async function Home() {
                   A student-managed investment fund working with industry professionals to simulate a real portfolio management environment; equipping our members with investment experience and financial literacy to grow their own wealth, long after graduation.
                 </p>
                 <p style={{ fontSize: 'var(--text-xs)', color: 'rgba(244,244,245,0.30)', lineHeight: 1.7, marginTop: 'var(--space-4)', paddingLeft: 'var(--space-5)', borderLeft: '2px solid rgba(155,18,57,0.2)' }}>
-                  All capital deployed is demo money only. SF Capital is affiliated with industry partners and sponsors, and operates in full compliance with USU regulations and Australian law. All research, analysis, and investment decisions are conducted solely to simulate professional industry practice.
+                  All capital deployed is strictly paper trading/ demo money only. SF Capital is affiliated with industry partners and sponsors, and operates in full compliance with USU regulations and Australian law. All research, analysis, and investment decisions are conducted solely to simulate professional industry practice.
                 </p>
               </div>
 
