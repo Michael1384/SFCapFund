@@ -1,1 +1,11 @@
-{"version":4,"routes":{"/portfolios/horizon-growth":{},"/portfolios/macro":{},"/portfolios/quant":{}},"dynamicRoutes":{"/portfolios/[slug]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/portfolios/[slug]","routeRegex":"^\\/portfolios\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"364181af96c4d25543f550599572c655","previewModeSigningKey":"e102d66688996f6414a82ca279d37c49ddf6bc52cc028322016f75269d060e2b","previewModeEncryptionKey":"3d803aa241ed70c1f94c0e8752b587bf642c73835a16401cbdf9a9c71066265f"}}
+{
+  "version": 4,
+  "routes": {},
+  "dynamicRoutes": {},
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "25635a5fa3fb6dea36547a121c2bcf3c",
+    "previewModeSigningKey": "078739abd3bfbf0b2e4a9b62b24540f1aef54ff48ba1c8c8a60aefa086eb654d",
+    "previewModeEncryptionKey": "adc7a8b9d34b66455b132d8c41ceb00d24148598b669b89daa250bbfbc7f3847"
+  }
+}

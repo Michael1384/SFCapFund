@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileWarning from "@/components/MobileWarning";
+import MVPNotice from "@/components/MVPNotice";
 
 export const metadata: Metadata = {
   title: "SF Capital — Student Investment Society",
@@ -26,6 +27,7 @@ export default function RootLayout({
         <script defer src="https://cloud.umami.is/script.js" data-website-id="24b74a2c-ead3-4a5b-8e92-129d2a8c5c97" />
       </head>
       <body style={{ fontFamily: "'Inter', sans-serif" }}>
+        <MVPNotice />
         <MobileWarning />
         <Navbar />
         {children}
