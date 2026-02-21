@@ -22,6 +22,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="24b74a2c-ead3-4a5b-8e92-129d2a8c5c97" />
       </head>
       <body style={{ fontFamily: "'Inter', sans-serif" }}>
         <Navbar />
