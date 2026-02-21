@@ -7,12 +7,15 @@ export default function HeroTyping() {
   return (
     <TextType
       text={[
-        'Strategy Focus',
+        'Strategic Focus',
         'Student Fund',
         'Quant Multi-Asset',
         'Multi-Asset Strategy',
         'USYD FXIA',
-        'SF',
+        'Syndeys F.?',
+        '#ALPHAONLY',
+        'Alpha Generators',
+        'highalphalowbeta'
       ]}
       typingSpeed={70}
       deletingSpeed={70}

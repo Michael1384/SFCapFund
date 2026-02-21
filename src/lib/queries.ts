@@ -11,10 +11,9 @@ import {
   HOLDINGS as SEED_HOLDINGS,
   PORTFOLIOS as SEED_PORTFOLIOS,
   PERFORMANCE_DATA as SEED_PERF,
-  NEWS_ITEMS as SEED_NEWS,
   TEAM_MEMBERS as SEED_TEAM,
 } from '@/lib/data';
-import type { Holding, Portfolio, PerformancePoint, NewsItem, TeamMember, AssetClass, PortfolioId } from '@/lib/types';
+import type { Holding, Portfolio, PerformancePoint, TeamMember, AssetClass, PortfolioId } from '@/lib/types';
 
 // ─── Row types (Supabase returns plain objects — typed explicitly for noImplicitAny) ─
 
@@ -32,10 +31,6 @@ interface PortfolioRow {
 }
 interface SnapshotRow { ticker: string; price: number; date: string; }
 interface HoldingShareRow { id: string; ticker: string; shares: number; }
-interface NewsRow {
-  id: string; title: string; summary: string; source: string; url: string;
-  published_at: string; sentiment: string; tickers: string[] | null;
-}
 interface TeamRow { name: string; role: string; bio: string; linkedin: string | null; }
 
 // ─── Helper ──────────────────────────────────────────────────────────────────
@@ -184,33 +179,6 @@ export async function getPerformanceHistory(days = 91): Promise<PerformancePoint
   }
 
   return points.slice(-days);
-}
-
-// ─── News ─────────────────────────────────────────────────────────────────────
-export async function getNews(limit = 20): Promise<NewsItem[]> {
-  if (!hasSupabase()) return SEED_NEWS;
-
-  const db = createServerClient();
-  if (!db) return SEED_NEWS;
-
-  const { data, error } = await db
-    .from('news_items')
-    .select('*')
-    .order('published_at', { ascending: false })
-    .limit(limit);
-
-  if (error || !data?.length) return SEED_NEWS;
-
-  return (data as NewsRow[]).map((n: NewsRow): NewsItem => ({
-    id:          n.id,
-    title:       n.title,
-    summary:     n.summary,
-    source:      n.source,
-    url:         n.url,
-    publishedAt: n.published_at,
-    sentiment:   n.sentiment as NewsItem['sentiment'],
-    tickers:     n.tickers ?? undefined,
-  }));
 }
 
 // ─── Team ─────────────────────────────────────────────────────────────────────

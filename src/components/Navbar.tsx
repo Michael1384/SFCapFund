@@ -9,8 +9,8 @@ import TickerTape from '@/components/TickerTape';
 const NAV_LINKS = [
   { label: 'Our Portfolios',  href: '/portfolios' },
   { label: 'Our Performance', href: '/performance' },
-  { label: 'News',            href: '/news' },
   { label: 'About Us',        href: '/about' },
+  { label: 'Opportunities',   href: '/opportunities' },
 ];
 
 // Total header height = nav bar (72px) + ticker tape (32px) = 104px
@@ -55,15 +55,10 @@ export default function Navbar() {
         <div className="container" style={{ height: '100%', display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>
 
           {/* Wordmark */}
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none', flexShrink: 0 }}>
-            <span style={{ fontSize: '26px', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.035em', lineHeight: 1 }}>
-              SF Capital
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
+            <span style={{ fontSize: '26px', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1 }}>
+              <span style={{ color: '#ffffff' }}>SF Capital</span><span style={{ color: '#c0003a' }}>.</span>
             </span>
-            <span style={{
-              width: '6px', height: '6px', borderRadius: '50%',
-              background: 'var(--accent)', flexShrink: 0,
-              marginTop: '2px',
-            }} />
           </Link>
 
           {/* Desktop nav — sits right next to the logo */}

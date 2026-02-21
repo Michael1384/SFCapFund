@@ -1,5 +1,5 @@
 export type AssetClass = 'equity' | 'commodity' | 'etf' | 'crypto' | 'bond' | 'cash';
-export type PortfolioId = 'overall' | 'short-term' | 'long-term' | 'macro' | 'thematic';
+export type PortfolioId = 'horizon-growth' | 'macro' | 'quant';
 
 export interface Holding {
   id: string;
@@ -17,31 +17,34 @@ export interface Holding {
   addedDate: string;
 }
 
+export interface PortfolioMember {
+  name: string;
+  role: string;
+  bio: string;
+}
+
 export interface Portfolio {
   id: PortfolioId;
   name: string;
+  tagline: string;          // e.g. "Global Equity | Growth-Oriented | Fundamental Conviction"
   description: string;
+  overview: string;         // longer paragraph overview
+  coverage: string[];       // bullet list of what's covered
+  strategyPoints: string[]; // bullet list of strategy approach
   inception: string;
+  initialAUM: number;       // starting capital in AUD, e.g. 50000
   targetReturn: string;
-  strategy: string;
+  targetReturnNote?: string; // e.g. "(Higher risk profile with controlled drawdowns)"
+  strategy: string;          // short label e.g. "Growth-Oriented"
   holdingIds: string[];
+  accentColor: string;       // hex for card accent
+  team?: PortfolioMember[];  // 1 PM + 5 analysts shown on individual portfolio pages
 }
 
 export interface PerformancePoint {
   date: string;
   value: number;
   benchmark?: number;
-}
-
-export interface NewsItem {
-  id: string;
-  title: string;
-  summary: string;
-  source: string;
-  url: string;
-  publishedAt: string;
-  sentiment: 'positive' | 'negative' | 'neutral';
-  tickers?: string[];
 }
 
 export interface TeamMember {

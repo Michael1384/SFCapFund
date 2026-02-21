@@ -1,63 +1,47 @@
 'use client';
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, useMotionValue, animate } from 'framer-motion';
 
 const ITEMS = [
 	{
 		num: '01',
-		name: 'Growth Portfolio',
-		strategy: 'Long-Term Equity',
-		target: '+18%',
-		color: '#10b981',
-		bg: 'rgba(16,185,129,0.07)',
-		border: 'rgba(16,185,129,0.18)',
-		desc: 'High-conviction positions in compounding businesses with durable competitive advantages.',
-		tags: ['Equities', 'Buy & Hold', 'Large Cap'],
-		stat: { label: 'Avg Hold', value: '18mo+' },
+		name: 'Horizon Growth Portfolio',
+		target: '18–30%',
+		color: '#3b82f6',
+		bg: 'rgba(59,130,246,0.07)',
+		border: 'rgba(59,130,246,0.18)',
+		overview: 'The Horizon Growth Portfolio combines fundamental equity research with forward-looking thematic exposure. It targets high-quality businesses benefiting from secular tailwinds, from AI infrastructure and energy transition to global consumer growth and digital platforms.',
+		coverage: ['Global equities (US, AU, EU, China, Japan, Emerging Markets)', 'Tech and AI infrastructure', 'Clean energy and critical minerals', 'Healthcare, biotech and digital platforms'],
+		strategies: ['Fundamental bottom-up equity research', 'Thematic overlay on structural trends', 'Long-term compounders with active risk management'],
 	},
 	{
 		num: '02',
-		name: 'Income Portfolio',
-		strategy: 'Dividend & Value',
-		target: '+10%',
-		color: '#60a5fa',
-		bg: 'rgba(96,165,250,0.07)',
-		border: 'rgba(96,165,250,0.18)',
-		desc: 'Yield-focused, defensive positions prioritising consistent cashflows and capital preservation.',
-		tags: ['Dividends', 'Value', 'Defensive'],
-		stat: { label: 'Avg Yield', value: '4–6%' },
+		name: 'Macro Portfolio',
+		target: '8–15%',
+		color: '#f59e0b',
+		bg: 'rgba(245,158,11,0.07)',
+		border: 'rgba(245,158,11,0.18)',
+		overview: 'The Macro Portfolio adopts a flexible, top-down approach, allocating capital across asset classes and regions in response to global economic conditions. The strategy identifies shifts in growth, inflation, and monetary policy, using these signals to inform sector rotation and asset allocation decisions.',
+		coverage: ['ETFs (equity indices, bonds, sectors)', 'Commodities (energy, metals, agriculture)', 'Currency & forex (AUD/USD, EUR/USD, USD/JPY)', 'Sector rotation'],
+		strategies: ['Macro & policy analysis', 'Sector and asset-class rotation', 'Drawdown control'],
 	},
 	{
 		num: '03',
-		name: 'Macro Portfolio',
-		strategy: 'Commodities & ETFs',
-		target: '+14%',
-		color: '#fbbf24',
-		bg: 'rgba(251,191,36,0.07)',
-		border: 'rgba(251,191,36,0.18)',
-		desc: 'Top-down macro themes expressed through ETFs, commodities, and sector rotations.',
-		tags: ['ETFs', 'Commodities', 'Global'],
-		stat: { label: 'Asset Classes', value: '6+' },
-	},
-	{
-		num: '04',
-		name: 'Thematic Portfolio',
-		strategy: 'Emerging Trends',
-		target: '+22%',
-		color: '#c084fc',
-		bg: 'rgba(192,132,252,0.07)',
-		border: 'rgba(192,132,252,0.18)',
-		desc: 'Concentrated bets on structural shifts — AI infrastructure, energy transition, and biotech.',
-		tags: ['Technology', 'High Growth', 'Thematic'],
-		stat: { label: 'Conviction', value: 'High' },
+		name: 'Quantitative Strategy',
+		target: '30–50%',
+		color: '#a855f7',
+		bg: 'rgba(168,85,247,0.07)',
+		border: 'rgba(168,85,247,0.18)',
+		overview: 'The Quantitative Strategy Portfolio implements systematic investment models designed to capture persistent market inefficiencies. The strategy emphasises consistency, transparency, and repeatability, limiting discretionary intervention. Models are monitored and refined over time.',
+		coverage: ['Global equities', 'ETFs & index products', 'Factor exposures (momentum, value, quality)', 'Forex & currency pairs (G10 and EM FX)'],
+		strategies: ['Quantitative factor models', 'Algorithmic trading signals', 'Backtested rules-based execution'],
 	},
 ];
 
 // Clone array: [last, ...items, first] for seamless looping
 const CLONED = [ITEMS[ITEMS.length - 1], ...ITEMS, ITEMS[0]];
 const CARD_WIDTH = 500;
-const CARD_HEIGHT = 300;
+const CARD_HEIGHT = 360;
 const GAP = 16;
 const STEP = CARD_WIDTH + GAP;
 
@@ -194,61 +178,66 @@ export default function HeroPortfolioCarousel() {
 								pointerEvents: 'none',
 							}} />
 
-							<div style={{ padding: '18px 22px 0', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flex: 1 }}>
-								{/* Left: name + strategy + desc */}
-								<div style={{ flex: 1, minWidth: 0, marginRight: '16px' }}>
-									<div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-										<span style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.25)' }}>{item.num}</span>
-										<span style={{ fontSize: '18px', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>{item.name}</span>
-										<span style={{
-											fontSize: '9px', fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase',
-											color: item.color, padding: '3px 8px', borderRadius: '5px',
-											background: `${item.color}18`, border: `1px solid ${item.color}30`,
-										}}>{item.strategy}</span>
+							<div style={{ padding: '18px 22px 14px', display: 'flex', flexDirection: 'column', flex: 1, gap: '12px' }}>
+								{/* Header row: num + name + target badge */}
+								<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+									<div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+										<span style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.25)', flexShrink: 0 }}>{item.num}</span>
+										<span style={{ fontSize: '19px', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</span>
 									</div>
-									<p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.48)', lineHeight: 1.6, margin: 0 }}>
-										{item.desc}
-									</p>
-								</div>
-
-								{/* Right: target badge + stat */}
-								<div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
 									<div style={{
-										borderRadius: '10px', padding: '8px 14px', textAlign: 'center',
+										flexShrink: 0,
+										borderRadius: '8px', padding: '5px 12px', textAlign: 'center',
 										background: 'rgba(0,0,0,0.35)', border: `1px solid ${item.border}`,
 									}}>
-										<div style={{ fontSize: '22px', fontWeight: 900, color: item.color, lineHeight: 1, letterSpacing: '-0.02em' }}>{item.target}</div>
-										<div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.25)', marginTop: '3px', letterSpacing: '0.10em', textTransform: 'uppercase' }}>Target</div>
+										<div style={{ fontSize: '18px', fontWeight: 900, color: item.color, lineHeight: 1, letterSpacing: '-0.02em' }}>{item.target}</div>
+										<div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.25)', marginTop: '2px', letterSpacing: '0.10em', textTransform: 'uppercase' }}>Target</div>
 									</div>
-									<div style={{ textAlign: 'right' }}>
-										<div style={{ fontSize: '14px', fontWeight: 800, color: 'rgba(255,255,255,0.65)', lineHeight: 1 }}>{item.stat.value}</div>
-										<div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.22)', marginTop: '2px', letterSpacing: '0.07em', textTransform: 'uppercase' }}>{item.stat.label}</div>
+								</div>
+
+								{/* Overview */}
+								<p style={{ margin: 0, fontSize: '12.5px', color: 'rgba(255,255,255,0.48)', lineHeight: 1.65 }}>
+									{item.overview}
+								</p>
+
+								{/* Coverage + Strategy two-column */}
+								<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', flex: 1 }}>
+									<div>
+										<div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: item.color, marginBottom: '6px', opacity: 0.85 }}>Coverage</div>
+										<ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+											{item.coverage.map((c, i) => (
+												<li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '5px', fontSize: '11.5px', color: 'rgba(255,255,255,0.55)', lineHeight: 1.45 }}>
+													<span style={{ color: item.color, opacity: 0.6, flexShrink: 0 }}>–</span>
+													{c}
+												</li>
+											))}
+										</ul>
+									</div>
+									<div>
+										<div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: item.color, marginBottom: '6px', opacity: 0.85 }}>Strategy</div>
+										<ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+											{item.strategies.map((s, i) => (
+												<li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '5px', fontSize: '11.5px', color: 'rgba(255,255,255,0.55)', lineHeight: 1.45 }}>
+													<span style={{ color: item.color, opacity: 0.6, flexShrink: 0 }}>–</span>
+													{s}
+												</li>
+											))}
+										</ul>
 									</div>
 								</div>
 							</div>
 
-							{/* Tags row + progress bar */}
-							<div>
-								<div style={{ padding: '10px 22px', display: 'flex', gap: '5px' }}>
-									{item.tags.map(tag => (
-										<span key={tag} style={{
-											fontSize: '9px', fontWeight: 600, padding: '3px 8px', borderRadius: '5px',
-											background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-											color: 'rgba(255,255,255,0.30)', letterSpacing: '0.04em',
-										}}>{tag}</span>
-									))}
-								</div>
-								<div style={{ height: '3px', background: 'rgba(255,255,255,0.04)' }}>
-									{!paused && ci === active + 1 && (
-										<motion.div
-											key={`prog-${active}`}
-											initial={{ scaleX: 0 }}
-											animate={{ scaleX: 1 }}
-											transition={{ duration: 5, ease: 'linear' }}
-											style={{ height: '100%', background: item.color, opacity: 0.45, transformOrigin: 'left' }}
-										/>
-									)}
-								</div>
+							{/* Progress bar only */}
+							<div style={{ height: '3px', background: 'rgba(255,255,255,0.04)', borderBottomLeftRadius: '18px', borderBottomRightRadius: '18px' }}>
+								{!paused && ci === active + 1 && (
+									<motion.div
+										key={`prog-${active}`}
+										initial={{ scaleX: 0 }}
+										animate={{ scaleX: 1 }}
+										transition={{ duration: 5, ease: 'linear' }}
+										style={{ height: '100%', background: item.color, opacity: 0.45, transformOrigin: 'left', borderBottomLeftRadius: '18px' }}
+									/>
+								)}
 							</div>
 						</div>
 					))}

@@ -2,9 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Background from '@/components/Background';
-import Navbar from '@/components/Navbar';
 import PerformanceChart from '@/components/PerformanceChart';
-import Footer from '@/components/Footer';
 import { PERFORMANCE_DATA } from '@/lib/data';
 import { BarChart, Bar, XAxis, YAxis, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -30,11 +28,10 @@ export default function PerformancePage() {
   return (
     <>
       <Background />
-      <Navbar />
       <main style={{ position: 'relative', zIndex: 1, paddingTop: '104px' }}>
-        <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-9)' }}>
+        <div className="container" style={{ paddingTop: 'var(--space-3)', paddingBottom: 'var(--space-9)' }}>
 
-          <div style={{ marginBottom: 'var(--space-7)' }}>
+          <div style={{ marginBottom: 'var(--space-4)' }}>
             <div className="eyebrow" style={{ marginBottom: '6px' }}>Analytics · Fund Year 2026</div>
             <h1 style={{ fontSize: 'var(--text-3xl)', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>Performance</h1>
           </div>
@@ -108,7 +105,6 @@ export default function PerformancePage() {
 
         </div>
       </main>
-      <Footer />
     </>
   );
 }

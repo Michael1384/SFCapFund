@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import Background from '@/components/Background';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { getHoldings, getPerformanceHistory } from '@/lib/queries';
 import { PORTFOLIOS } from '@/lib/data';
 import HeroTyping from '@/components/HeroTyping';
@@ -21,7 +19,6 @@ export default async function Home() {
   return (
     <>
       <Background />
-      <Navbar />
 
       <main style={{ position: 'relative', zIndex: 1 }}>
 
@@ -72,7 +69,9 @@ export default async function Home() {
             gridTemplateColumns: '52% 1fr',
             gap: '60px',
             alignItems: 'center',
-            padding: '104px 5% 80px 5%',            minHeight: '100vh',
+            justifyContent: 'center',
+            padding: '104px 5% 80px 5%',
+            minHeight: '100vh',
             boxSizing: 'border-box',
           }}>
             {/* LEFT — hero text */}
@@ -82,7 +81,7 @@ export default async function Home() {
                   <HeroTyping />
                 </span>
                 <span style={{ display: 'block', fontSize: '112px', whiteSpace: 'nowrap', lineHeight: 0.90 }}>
-                  Capital<span style={{ position: 'relative', top: '8px', fontSize: '112px' }}>.</span>
+                  Capital.
                 </span>
               </h1>
               <p style={{ fontSize: '20px', fontWeight: 500, color: 'rgba(255,255,255,0.50)', maxWidth: '520px', lineHeight: 1.55, margin: 0 }}>
@@ -99,52 +98,38 @@ export default async function Home() {
               </p>
             </div>
 
-            {/* RIGHT — carousel */}
-            <HeroPortfolioCarousel />
+            {/* RIGHT — carousel, nudged down */}
+            <div style={{ paddingTop: '80px' }}>
+              <HeroPortfolioCarousel />
+            </div>
           </div>
         </section>
 
-        {/* ── What We Do ───────────────────────────────────────── */}
+        {/* ── What We Are ──────────────────────────────────────── */}
         <section style={{ borderBottom: '1px solid var(--border)' }}>
           <div className="container" style={{ paddingTop: 'var(--space-9)', paddingBottom: 'var(--space-9)' }}>
-
-            {/* Slogan banner */}
-            <p style={{
-              fontSize: 'clamp(15px, 1.5vw, 18px)',
-              color: 'rgba(244,244,245,0.55)',
-              lineHeight: 1.8,
-              fontWeight: 400,
-              maxWidth: '720px',
-              marginBottom: 'var(--space-9)',
-              borderLeft: '2px solid rgba(155,18,57,0.5)',
-              paddingLeft: 'var(--space-5)',
-            }}>
-              A student-managed investment fund working with industry professionals to simulate a real portfolio management environment; equipping our members with investment experience and financial literacy to grow their own wealth, long after graduation.
-            </p>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-9)', alignItems: 'start' }}>
 
               <div>
-                <div className="eyebrow" style={{ marginBottom: 'var(--space-4)' }}>What We Do</div>
+                <div className="eyebrow" style={{ marginBottom: 'var(--space-4)', fontSize: 'var(--text-base)' }}>What We Are</div>
                 <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 700, letterSpacing: '-0.025em', marginBottom: 'var(--space-5)', lineHeight: 1.15 }}>
-                  Real investing.<br />Real learning.
+                  Real research.<br />Real learning.
                 </h2>
-                <p style={{ fontSize: 'var(--text-md)', color: 'var(--text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)' }}>
-                  SF Capital gives University of Sydney students hands-on experience managing a simulated investment portfolio.
-                  Every decision is research-backed, committee-reviewed, and tracked transparently.
+                <p style={{ fontSize: 'clamp(16px, 1.6vw, 19px)', color: 'rgba(244,244,245,0.60)', lineHeight: 1.8, fontWeight: 400, borderLeft: '2px solid rgba(155,18,57,0.5)', paddingLeft: 'var(--space-5)', margin: 0 }}>
+                  A student-managed investment fund working with industry professionals to simulate a real portfolio management environment; equipping our members with investment experience and financial literacy to grow their own wealth, long after graduation.
                 </p>
-                <p style={{ fontSize: 'var(--text-base)', color: 'var(--text-secondary)', lineHeight: 1.75 }}>
-                  We run four distinct strategies — from long-term compounders to macro &amp; commodities — so members develop
-                  a broad, practical understanding of global markets.
+                <p style={{ fontSize: 'var(--text-xs)', color: 'rgba(244,244,245,0.30)', lineHeight: 1.7, marginTop: 'var(--space-4)', paddingLeft: 'var(--space-5)', borderLeft: '2px solid rgba(155,18,57,0.2)' }}>
+                  All capital deployed is demo money only. SF Capital is affiliated with industry partners and sponsors, and operates in full compliance with USU regulations and Australian law. All research, analysis, and investment decisions are conducted solely to simulate professional industry practice.
                 </p>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
                 {[
-                  { n: '01', title: 'Research &amp; Analysis',      body: 'Every position starts with a written investment thesis, reviewed by the full committee before capital is committed.' },
-                  { n: '02', title: 'Portfolio Management',        body: 'We manage four live strategies across equities, commodities, ETFs, and thematic plays — Mar to Dec 2026.' },
-                  { n: '03', title: 'Performance Accountability',  body: 'Returns are tracked publicly against S&P 500. We own our wins and our losses equally.' },
-                  { n: '04', title: 'Education &amp; Community',   body: 'Weekly presentations, mentors from industry, and an open application process each semester.' },
+                  { n: '01', title: 'Research &amp; Analysis',      body: 'Every position starts with a written investment thesis, reviewed by a committee of analysts and portfolio managers before capital is committed.' },
+                  { n: '02', title: 'Portfolio Management',        body: 'Three teams manage three portfolios with separate coverages and strategies across equities, commodities, ETFs, and thematic plays.' },
+                  { n: '03', title: 'Performance Accountability',  body: 'All positions are posted live and open source; no cheating. Our only goals are to generate alpha and manage risk. A true simulation of industry.' },
+                  { n: '04', title: 'Education &amp; Community',   body: 'Weekly events, seminars, and meetings with mentors from industry and sponsors, with an open application process each semester.' },
                 ].map(item => (
                   <div key={item.n} style={{ display: 'flex', gap: 'var(--space-4)', paddingBottom: 'var(--space-4)', borderBottom: '1px solid var(--border)' }}>
                     <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--accent-text)', fontVariantNumeric: 'tabular-nums', minWidth: '22px', paddingTop: '2px' }}>{item.n}</span>
@@ -162,20 +147,23 @@ export default async function Home() {
 
         {/* ── Our Portfolios ───────────────────────────────────── */}
         <section style={{ borderBottom: '1px solid var(--border)' }}>
-          <div className="container" style={{ paddingTop: 'var(--space-9)', paddingBottom: 'var(--space-9)' }}>
+          <div className="container" style={{ paddingTop: 'var(--space-7)', paddingBottom: 'var(--space-9)' }}>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-7)', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
               <div>
-                <div className="eyebrow" style={{ marginBottom: 'var(--space-3)' }}>Our Portfolios</div>
-                <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 36px)', fontWeight: 700, letterSpacing: '-0.02em' }}>Four strategies, one fund.</h2>
+                <div className="eyebrow" style={{ marginBottom: 'var(--space-3)', fontSize: 'var(--text-base)' }}>Our Portfolios</div>
+                <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 700, letterSpacing: '-0.025em' }}>Three portfolios, one fund.</h2>
+                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginTop: 'var(--space-3)', lineHeight: 1.65, maxWidth: '480px' }}>
+                  Horizon Growth targets long-term compounders across global equities and structural themes. Macro positions across asset classes based on economic cycles and top-down research. Quant deploys systematic, rules-based models to exploit statistical inefficiencies. Each portfolio is run by a dedicated PM and 5 analysts, independently managed with its own strategy.
+                </p>
               </div>
-              <Link href="/portfolios" style={{ fontSize: 'var(--text-sm)', color: 'var(--accent-text)', fontWeight: 500, borderBottom: '1px solid rgba(244,63,94,0.3)', paddingBottom: '1px' }}>
-                View all positions →
+              <Link href="/portfolios" style={{ fontSize: 'var(--text-base)', color: 'var(--accent-text)', fontWeight: 600, borderBottom: '1px solid rgba(244,63,94,0.3)', paddingBottom: '1px' }}>
+                View our portfolios
               </Link>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
-              {PORTFOLIOS.filter(p => p.id !== 'overall').map(p => (
+              {PORTFOLIOS.map(p => (
                 <PortfolioCard key={p.id} portfolio={p} />
               ))}
             </div>
@@ -187,8 +175,8 @@ export default async function Home() {
           <div className="container" style={{ paddingTop: 'var(--space-9)', paddingBottom: 'var(--space-9)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-7)', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
               <div>
-                <div className="eyebrow" style={{ marginBottom: 'var(--space-3)' }}>Live</div>
-                <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 36px)', fontWeight: 700, letterSpacing: '-0.02em' }}>Fund at a glance.</h2>
+                <div className="eyebrow" style={{ marginBottom: 'var(--space-3)', fontSize: 'var(--text-base)' }}>Live</div>
+                <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 700, letterSpacing: '-0.025em' }}>Fund at a glance.</h2>
               </div>
               <Link href="/portfolios" style={{ fontSize: 'var(--text-sm)', color: 'var(--accent-text)', fontWeight: 500, borderBottom: '1px solid rgba(244,63,94,0.3)', paddingBottom: '1px' }}>
                 View portfolios →
@@ -204,8 +192,8 @@ export default async function Home() {
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-7)', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
               <div>
-                <div className="eyebrow" style={{ marginBottom: 'var(--space-3)' }}>Historical</div>
-                <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 36px)', fontWeight: 700, letterSpacing: '-0.02em' }}>Our 2025 Performance.</h2>
+                <div className="eyebrow" style={{ marginBottom: 'var(--space-3)', fontSize: 'var(--text-base)' }}>Historical</div>
+                <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 700, letterSpacing: '-0.025em' }}>Our 2025 Performance.</h2>
               </div>
               <Link href="/performance" style={{ fontSize: 'var(--text-sm)', color: 'var(--accent-text)', fontWeight: 500, borderBottom: '1px solid rgba(244,63,94,0.3)', paddingBottom: '1px' }}>
                 View full analytics →
@@ -240,7 +228,6 @@ export default async function Home() {
           </div>
         </section>
 
-        <Footer />
       </main>
     </>
   );
