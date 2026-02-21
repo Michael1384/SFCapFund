@@ -44,7 +44,7 @@ export default function MobileWarning() {
           letterSpacing: '-0.02em',
           marginBottom: '12px',
         }}>
-          Desktop Only — For Now
+          Desktop Only, For Now
         </div>
 
         {/* Body */}
@@ -54,7 +54,7 @@ export default function MobileWarning() {
           lineHeight: 1.7,
           marginBottom: '28px',
         }}>
-          SF Capital is currently designed for <strong style={{ color: '#e8eaf0' }}>laptop and desktop</strong> screens only. A mobile experience is in the works — check back soon.
+          SF Capital is currently designed for <strong style={{ color: '#e8eaf0' }}>laptop and desktop</strong> screens only. A mobile experience is in the works, check back soon.
         </p>
 
         {/* CTA */}
