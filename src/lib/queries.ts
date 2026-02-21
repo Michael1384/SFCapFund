@@ -14,10 +14,32 @@ import {
   NEWS_ITEMS as SEED_NEWS,
   TEAM_MEMBERS as SEED_TEAM,
 } from '@/lib/data';
-import type { Holding, Portfolio, PerformancePoint, NewsItem, TeamMember } from '@/lib/types';
+import type { Holding, Portfolio, PerformancePoint, NewsItem, TeamMember, AssetClass, PortfolioId } from '@/lib/types';
+
+// ─── Row types (Supabase returns plain objects — typed explicitly for noImplicitAny) ─
+
+interface HoldingRow {
+  id: string; ticker: string; name: string; asset_class: string;
+  shares: number; avg_cost: number; currency: string;
+  sector: string | null; thesis: string | null; added_date: string;
+}
+interface PriceRow { ticker: string; price: number; previous_close: number; }
+interface MembershipRow { portfolio_id: string; holding_id: string; }
+interface PortfolioRow {
+  id: string; name: string; description: string; inception: string;
+  target_return: string; strategy: string;
+  portfolio_holdings: { holding_id: string }[];
+}
+interface SnapshotRow { ticker: string; price: number; date: string; }
+interface HoldingShareRow { id: string; ticker: string; shares: number; }
+interface NewsRow {
+  id: string; title: string; summary: string; source: string; url: string;
+  published_at: string; sentiment: string; tickers: string[] | null;
+}
+interface TeamRow { name: string; role: string; bio: string; linkedin: string | null; }
 
 // ─── Helper ──────────────────────────────────────────────────────────────────
-function hasSupabase() {
+function hasSupabase(): boolean {
   return !!(
     process.env.NEXT_PUBLIC_SUPABASE_URL &&
     process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -42,7 +64,7 @@ export async function getHoldings(): Promise<Holding[]> {
   if (hErr || !holdingRows?.length) return SEED_HOLDINGS;
 
   // 2. Get latest price for each ticker
-  const tickers = holdingRows.map(h => h.ticker);
+  const tickers = (holdingRows as { ticker: string }[]).map(h => h.ticker);
   const { data: priceRows, error: pErr } = await db
     .from('price_snapshots')
     .select('ticker, price, previous_close')
@@ -53,7 +75,7 @@ export async function getHoldings(): Promise<Holding[]> {
 
   // Build a map: ticker → latest price row
   const priceMap = new Map<string, { price: number; previousClose: number }>();
-  for (const p of priceRows ?? []) {
+  for (const p of (priceRows ?? []) as { ticker: string; price: number; previous_close: number }[]) {
     if (!priceMap.has(p.ticker)) {
       priceMap.set(p.ticker, { price: p.price, previousClose: p.previous_close });
     }
@@ -65,27 +87,27 @@ export async function getHoldings(): Promise<Holding[]> {
     .select('portfolio_id, holding_id');
 
   const membershipMap = new Map<string, string[]>();
-  for (const m of membershipRows ?? []) {
+  for (const m of (membershipRows ?? []) as { portfolio_id: string; holding_id: string }[]) {
     const arr = membershipMap.get(m.holding_id) ?? [];
     arr.push(m.portfolio_id);
     membershipMap.set(m.holding_id, arr);
   }
 
   // 4. Merge into Holding shape
-  return holdingRows.map(h => {
+  return (holdingRows as HoldingRow[]).map((h: HoldingRow): Holding => {
     const live = priceMap.get(h.ticker);
     return {
       id:            h.id,
       ticker:        h.ticker,
       name:          h.name,
-      assetClass:    h.asset_class,
+      assetClass:    h.asset_class as AssetClass,
       shares:        h.shares,
       avgCost:       h.avg_cost,
       currentPrice:  live?.price         ?? h.avg_cost,
       previousClose: live?.previousClose ?? h.avg_cost,
       currency:      h.currency,
       sector:        h.sector ?? undefined,
-      portfolioIds:  (membershipMap.get(h.id) ?? []) as Holding['portfolioIds'],
+      portfolioIds:  (membershipMap.get(h.id) ?? []) as PortfolioId[],
       thesis:        h.thesis ?? undefined,
       addedDate:     h.added_date,
     };
@@ -106,14 +128,14 @@ export async function getPortfolios(): Promise<Portfolio[]> {
 
   if (error || !portRows?.length) return SEED_PORTFOLIOS;
 
-  return portRows.map(p => ({
-    id:           p.id as Portfolio['id'],
+  return (portRows as PortfolioRow[]).map((p: PortfolioRow): Portfolio => ({
+    id:           p.id as PortfolioId,
     name:         p.name,
     description:  p.description,
     inception:    p.inception,
     targetReturn: p.target_return,
     strategy:     p.strategy,
-    holdingIds:   (p.portfolio_holdings as { holding_id: string }[]).map(ph => ph.holding_id),
+    holdingIds:   p.portfolio_holdings.map((ph: { holding_id: string }) => ph.holding_id),
   }));
 }
 
@@ -135,17 +157,19 @@ export async function getPerformanceHistory(days = 91): Promise<PerformancePoint
 
   if (!holdings?.length) return SEED_PERF;
 
+  const holdingShareRows = (holdings ?? []) as HoldingShareRow[];
+
   const { data: snapshots, error } = await db
     .from('price_snapshots')
     .select('ticker, price, date')
     .order('date', { ascending: true })
-    .limit(days * holdings.length);
+    .limit(days * holdingShareRows.length);
 
   if (error || !snapshots?.length) return SEED_PERF;
 
   // Group snapshots by date
   const byDate = new Map<string, Map<string, number>>();
-  for (const s of snapshots) {
+  for (const s of snapshots as SnapshotRow[]) {
     if (!byDate.has(s.date)) byDate.set(s.date, new Map());
     byDate.get(s.date)!.set(s.ticker, s.price);
   }
@@ -153,9 +177,8 @@ export async function getPerformanceHistory(days = 91): Promise<PerformancePoint
   // Compute fund NAV per date
   const points: PerformancePoint[] = [];
   for (const [date, prices] of Array.from(byDate.entries()).sort()) {
-    const value = holdings.reduce((sum, h) => {
-      const price = prices.get(h.ticker) ?? 0;
-      return sum + h.shares * price;
+    const value = holdingShareRows.reduce((sum: number, h: HoldingShareRow) => {
+      return sum + h.shares * (prices.get(h.ticker) ?? 0);
     }, 0);
     points.push({ date, value });
   }
@@ -178,14 +201,14 @@ export async function getNews(limit = 20): Promise<NewsItem[]> {
 
   if (error || !data?.length) return SEED_NEWS;
 
-  return data.map(n => ({
+  return (data as NewsRow[]).map((n: NewsRow): NewsItem => ({
     id:          n.id,
     title:       n.title,
     summary:     n.summary,
     source:      n.source,
     url:         n.url,
     publishedAt: n.published_at,
-    sentiment:   n.sentiment,
+    sentiment:   n.sentiment as NewsItem['sentiment'],
     tickers:     n.tickers ?? undefined,
   }));
 }
@@ -204,7 +227,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
 
   if (error || !data?.length) return SEED_TEAM;
 
-  return data.map(m => ({
+  return (data as TeamRow[]).map((m: TeamRow): TeamMember => ({
     name:     m.name,
     role:     m.role,
     bio:      m.bio,

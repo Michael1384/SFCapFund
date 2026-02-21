@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Background from '@/components/Background';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { getHoldings, getNews, getPerformanceHistory } from '@/lib/queries';
+import { getHoldings, getPerformanceHistory } from '@/lib/queries';
 import { PORTFOLIOS } from '@/lib/data';
 import HeroTyping from '@/components/HeroTyping';
 import HeroPortfolioCarousel from '@/components/HeroPortfolioCarousel';
@@ -13,9 +13,8 @@ import HomeDashboard from '@/components/HomeDashboard';
 export const revalidate = 300;
 
 export default async function Home() {
-  const [holdings, news, perfHistory] = await Promise.all([
+  const [holdings, perfHistory] = await Promise.all([
     getHoldings(),
-    getNews(4),
     getPerformanceHistory(91),
   ]);
 
@@ -183,19 +182,61 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* ── Live Dashboard ───────────────────────────────────── */}
+        {/* ── Fund at a Glance ─────────────────────────────────── */}
         <section style={{ borderBottom: '1px solid var(--border)' }}>
           <div className="container" style={{ paddingTop: 'var(--space-9)', paddingBottom: 'var(--space-9)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-7)', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
               <div>
-                <div className="eyebrow" style={{ marginBottom: 'var(--space-3)' }}>Live Dashboard</div>
+                <div className="eyebrow" style={{ marginBottom: 'var(--space-3)' }}>Live</div>
                 <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 36px)', fontWeight: 700, letterSpacing: '-0.02em' }}>Fund at a glance.</h2>
               </div>
-              <Link href="/performance" style={{ fontSize: 'var(--text-sm)', color: 'var(--accent-text)', fontWeight: 500, borderBottom: '1px solid rgba(244,63,94,0.3)', paddingBottom: '1px' }}>
-                Full performance →
+              <Link href="/portfolios" style={{ fontSize: 'var(--text-sm)', color: 'var(--accent-text)', fontWeight: 500, borderBottom: '1px solid rgba(244,63,94,0.3)', paddingBottom: '1px' }}>
+                View portfolios →
               </Link>
             </div>
-            <HomeDashboard holdings={holdings} news={news} perfHistory={perfHistory} />
+            <HomeDashboard holdings={holdings} perfHistory={perfHistory} />
+          </div>
+        </section>
+
+        {/* ── Our 2025 Performance ─────────────────────────────── */}
+        <section style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="container" style={{ paddingTop: 'var(--space-9)', paddingBottom: 'var(--space-9)' }}>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-7)', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
+              <div>
+                <div className="eyebrow" style={{ marginBottom: 'var(--space-3)' }}>Historical</div>
+                <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 36px)', fontWeight: 700, letterSpacing: '-0.02em' }}>Our 2025 Performance.</h2>
+              </div>
+              <Link href="/performance" style={{ fontSize: 'var(--text-sm)', color: 'var(--accent-text)', fontWeight: 500, borderBottom: '1px solid rgba(244,63,94,0.3)', paddingBottom: '1px' }}>
+                View full analytics →
+              </Link>
+            </div>
+
+            {/* Key metrics row */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1px', background: 'var(--border)', border: '1px solid var(--border)', borderRadius: '10px', overflow: 'hidden', marginBottom: 'var(--space-7)' }}>
+              {[
+                { label: 'Total Return',  value: '+24.7%', sub: 'Mar – Dec 2025', positive: true  },
+                { label: 'vs S&P 500',    value: '+8.3%',  sub: 'outperformance', positive: true  },
+                { label: 'Max Drawdown',  value: '-6.1%',  sub: 'peak to trough', positive: false },
+                { label: 'Sharpe Ratio',  value: '1.84',   sub: 'risk-adjusted',  positive: true  },
+              ].map(m => (
+                <div key={m.label} style={{ background: 'var(--bg-raised)', padding: 'var(--space-5)' }}>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 'var(--space-2)' }}>{m.label}</div>
+                  <div style={{ fontSize: 'clamp(22px, 2.5vw, 30px)', fontWeight: 800, letterSpacing: '-0.03em', color: m.positive ? 'var(--gain)' : 'var(--loss)', marginBottom: '4px', fontVariantNumeric: 'tabular-nums' }}>{m.value}</div>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{m.sub}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Placeholder — replace with real 2025 chart when data is ready */}
+            <div style={{ background: 'var(--bg-raised)', border: '1px solid var(--border)', borderRadius: '10px', padding: 'var(--space-8)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-3)', minHeight: '160px' }}>
+              <div style={{ fontSize: '32px', opacity: 0.2 }}>📈</div>
+              <p style={{ color: 'var(--text-muted)', fontSize: 'var(--text-sm)', margin: 0 }}>2025 historical chart — data to be added.</p>
+              <Link href="/performance" style={{ color: 'var(--accent-text)', fontSize: 'var(--text-sm)', borderBottom: '1px solid rgba(244,63,94,0.3)', paddingBottom: '1px' }}>
+                View full performance page →
+              </Link>
+            </div>
+
           </div>
         </section>
 
