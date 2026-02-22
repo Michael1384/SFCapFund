@@ -106,17 +106,17 @@ export default function Navbar() {
         <div style={{
           background: 'var(--bg-subtle)',
           borderBottom: '1px solid var(--border)',
-          padding: 'var(--space-3) var(--space-4)',
-          display: 'flex', flexDirection: 'column', gap: '2px',
+          padding: 'var(--space-2) var(--space-4)',
+          display: 'flex', flexDirection: 'column', gap: '1px',
         }}>
           {NAV_LINKS.map(link => {
             const active = pathname === link.href;
             return (
               <Link key={link.href} href={link.href} onClick={() => setOpen(false)} style={{
-                padding: '12px 14px',
+                padding: '9px 12px',
                 borderRadius: 'var(--radius-md)',
-                fontSize: '16px',
-                fontWeight: active ? 500 : 400,
+                fontSize: '13px',
+                fontWeight: active ? 600 : 400,
                 color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
                 background: 'transparent',
                 textDecoration: 'none',

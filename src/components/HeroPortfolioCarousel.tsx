@@ -45,7 +45,7 @@ const CARD_HEIGHT = 360;
 const GAP = 16;
 const STEP = CARD_WIDTH + GAP;
 
-export default function HeroPortfolioCarousel() {
+export default function HeroPortfolioCarousel({ isMobile }: { isMobile?: boolean }) {
 	const [active, setActive] = useState(0);
 	const [paused, setPaused] = useState(false);
 	const x = useMotionValue(-1 * STEP);
@@ -120,6 +120,65 @@ export default function HeroPortfolioCarousel() {
 			}}
 		>{label}</button>
 	);
+
+	/* ── MOBILE: simple swipeable single card, full width ── */
+	if (isMobile) {
+		return (
+			<div style={{ width: '100%', userSelect: 'none' }}>
+				{/* Card */}
+				<div style={{
+					width: '100%',
+					borderRadius: '14px',
+					border: `1px solid ${p.border}`,
+					background: `linear-gradient(135deg, ${p.bg} 0%, rgba(8,10,15,0.75) 100%)`,
+					backdropFilter: 'blur(20px)',
+					WebkitBackdropFilter: 'blur(20px)',
+					padding: '16px',
+					boxSizing: 'border-box',
+					position: 'relative',
+					overflow: 'hidden',
+				}}>
+					{/* Glow */}
+					<div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '140px', height: '140px', borderRadius: '50%', background: p.color, opacity: 0.07, filter: 'blur(40px)', pointerEvents: 'none' }} />
+					{/* Header row */}
+					<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+						<div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flex: 1 }}>
+							<span style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.25)', flexShrink: 0 }}>{p.num}</span>
+							<span style={{ fontSize: '14px', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</span>
+						</div>
+						<div style={{ flexShrink: 0, borderRadius: '6px', padding: '4px 8px', background: 'rgba(0,0,0,0.4)', border: `1px solid ${p.border}`, marginLeft: '8px', textAlign: 'center' }}>
+							<div style={{ fontSize: '13px', fontWeight: 900, color: p.color, lineHeight: 1 }}>{p.target}</div>
+							<div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '1px' }}>Target</div>
+						</div>
+					</div>
+					{/* Overview */}
+					<p style={{ margin: '0 0 10px 0', fontSize: '11.5px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.6, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+						{p.overview}
+					</p>
+					{/* Progress bar */}
+					<div style={{ height: '2px', background: 'rgba(255,255,255,0.07)', borderRadius: '2px', overflow: 'hidden' }}>
+						<motion.div
+							key={`prog-mob-${active}`}
+							initial={{ scaleX: 0 }}
+							animate={{ scaleX: 1 }}
+							transition={{ duration: 5, ease: 'linear' }}
+							style={{ height: '100%', background: p.color, opacity: 0.5, transformOrigin: 'left' }}
+						/>
+					</div>
+				</div>
+				{/* Controls */}
+				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginTop: '12px' }}>
+					<button onClick={prev} style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.13)', color: 'rgba(255,255,255,0.8)', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>←</button>
+					<div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+						{ITEMS.map((item, i) => (
+							<button key={i} onClick={() => goTo(i)} style={{ width: i === active ? '22px' : '7px', height: '7px', borderRadius: '4px', border: 'none', padding: 0, cursor: 'pointer', background: i === active ? p.color : 'rgba(255,255,255,0.13)', transition: 'all 0.3s' }} />
+						))}
+					</div>
+					<button onClick={next} style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.13)', color: 'rgba(255,255,255,0.8)', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>→</button>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div

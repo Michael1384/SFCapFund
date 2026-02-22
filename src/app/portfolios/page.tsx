@@ -20,17 +20,18 @@ function normalise(data: PerformancePoint[]) {
   }));
 }
 
-function MiniChart({ data, accent }: { data: PerformancePoint[]; accent: string }) {
+function MiniChart({ data, accent, isMobile }: { data: PerformancePoint[]; accent: string; isMobile?: boolean }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
   const chartData = normalise(data);
+  const chartHeight = isMobile ? 160 : 200;
   if (!mounted) return (
-    <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ height: chartHeight, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>Loading…</span>
     </div>
   );
   return (
-    <ResponsiveContainer width="100%" height={200}>
+    <ResponsiveContainer width="100%" height={chartHeight}>
       <AreaChart data={chartData} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
         <defs>
           <linearGradient id={`fill-${accent.replace('#','')}`} x1="0" y1="0" x2="0" y2="1">
@@ -62,6 +63,13 @@ function MiniChart({ data, accent }: { data: PerformancePoint[]; accent: string 
 
 function PortfoliosClient({ initialHoldings }: { initialHoldings: Holding[] }) {
   const [activeId, setActiveId] = useState<PortfolioId>('horizon-growth');
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
   const portfolio = PORTFOLIOS.find(p => p.id === activeId) ?? PORTFOLIOS[0];
   const holdings  = initialHoldings.filter(h => portfolio.holdingIds.includes(h.id));
 
@@ -75,14 +83,14 @@ function PortfoliosClient({ initialHoldings }: { initialHoldings: Holding[] }) {
 
   return (
     <>
-      <main style={{ position: 'relative', zIndex: 1, paddingTop: '104px' }}>
+      <main style={{ position: 'relative', zIndex: 1, paddingTop: '104px', overflowX: 'hidden' }}>
         <div className="container" style={{ paddingTop: 'var(--space-3)', paddingBottom: 0 }}>
 
           {/* Page heading — stays at normal container width */}
           <div style={{ marginBottom: 'var(--space-4)' }}>
-            <div className="eyebrow" style={{ marginBottom: '6px', fontSize: 'var(--text-sm)' }}>Fund Year 2026</div>
-            <h1 style={{ fontSize: 'var(--text-3xl)', fontWeight: 800, letterSpacing: '-0.025em' }}>Our Portfolios At A Glance</h1>
-            <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginTop: 'var(--space-3)', lineHeight: 1.7 }}>
+            <div className="eyebrow" style={{ marginBottom: '6px', fontSize: isMobile ? '10px' : 'var(--text-sm)' }}>Fund Year 2026</div>
+            <h1 style={{ fontSize: isMobile ? '22px' : 'var(--text-3xl)', fontWeight: 800, letterSpacing: '-0.025em' }}>Our Portfolios At A Glance</h1>
+            <p style={{ fontSize: isMobile ? '12px' : 'var(--text-sm)', color: 'var(--text-secondary)', marginTop: 'var(--space-3)', lineHeight: 1.7 }}>
               Each portfolio is managed independently by a group including one portfolio manager and 5 analysts, allowing for diversification across styles, time horizons, and risk profiles.
             </p>
           </div>
@@ -94,21 +102,36 @@ function PortfoliosClient({ initialHoldings }: { initialHoldings: Holding[] }) {
         </div>
 
         {/* Wide section — tabs + all portfolio content */}
-        <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', paddingLeft: 'var(--space-8)', paddingRight: 'var(--space-8)', paddingBottom: 'var(--space-9)' }}>
+        <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', paddingLeft: isMobile ? '16px' : 'var(--space-8)', paddingRight: isMobile ? '16px' : 'var(--space-8)', paddingBottom: 'var(--space-9)' }}>
 
           {/* Tabs */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderBottom: '1px solid var(--border)', marginBottom: 'var(--space-6)' }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+            borderBottom: isMobile ? 'none' : '1px solid var(--border)',
+            marginBottom: 'var(--space-6)',
+            gap: isMobile ? '4px' : 0,
+          }}>
             {PORTFOLIOS.map(p => {
               const isActive = activeId === p.id;
               return (
                 <button key={p.id} onClick={() => setActiveId(p.id)} style={{
-                  padding: '10px 12px', fontSize: 'var(--text-lg)',
+                  padding: isMobile ? '8px 12px' : '10px 12px',
+                  fontSize: isMobile ? '12px' : 'var(--text-lg)',
                   fontWeight: isActive ? 700 : 400,
                   color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-                  background: 'none', border: 'none',
-                  borderBottom: isActive ? `3px solid ${p.accentColor}` : '3px solid transparent',
-                  marginBottom: '-1px', cursor: 'pointer',
-                  textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                  background: isMobile ? (isActive ? 'var(--bg-raised)' : 'none') : 'none',
+                  borderTop: isMobile ? `1px solid ${isActive ? p.accentColor : 'var(--border)'}` : 'none',
+                  borderLeft: isMobile ? `1px solid ${isActive ? p.accentColor : 'var(--border)'}` : 'none',
+                  borderRight: isMobile ? `1px solid ${isActive ? p.accentColor : 'var(--border)'}` : 'none',
+                  borderBottom: isMobile ? `1px solid ${isActive ? p.accentColor : 'var(--border)'}` : (isActive ? `3px solid ${p.accentColor}` : '3px solid transparent'),
+                  borderRadius: isMobile ? '6px' : 0,
+                  marginBottom: isMobile ? 0 : '-1px',
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  whiteSpace: isMobile ? 'normal' : 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                   transition: 'color var(--transition), border-color var(--transition)',
                 }}>
                   {p.name}
@@ -137,7 +160,7 @@ function PortfoliosClient({ initialHoldings }: { initialHoldings: Holding[] }) {
           </div>
 
           {/* Stats bar */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '1px', background: 'var(--border)', marginBottom: 'var(--space-6)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(130px, 1fr))', gap: '1px', background: 'var(--border)', marginBottom: 'var(--space-6)' }}>
             {[
               { label: 'AUM',           value: `$${currentAUM.toLocaleString('en-US', { maximumFractionDigits: 0 })}`, color: 'var(--text-primary)' },
               { label: 'YTD Growth',    value: `${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(2)}%`,                       color: pnlPct >= 0 ? 'var(--gain)' : 'var(--loss)' },
@@ -147,9 +170,9 @@ function PortfoliosClient({ initialHoldings }: { initialHoldings: Holding[] }) {
               { label: 'Inception',     value: portfolio.inception,                                                      color: 'var(--text-secondary)' },
               { label: 'Positions',     value: `${holdings.length}`,                                                    color: 'var(--text-primary)' },
             ].map(item => (
-              <div key={item.label} style={{ background: 'var(--bg-raised)', padding: 'var(--space-4) var(--space-5)' }}>
-                <div className="eyebrow" style={{ marginBottom: 'var(--space-2)' }}>{item.label}</div>
-                <div style={{ fontSize: 'var(--text-base)', fontWeight: 600, color: item.color }}>{item.value}</div>
+              <div key={item.label} style={{ background: 'var(--bg-raised)', padding: isMobile ? 'var(--space-3)' : 'var(--space-4) var(--space-5)' }}>
+                <div className="eyebrow" style={{ marginBottom: 'var(--space-2)', fontSize: isMobile ? '9px' : undefined }}>{item.label}</div>
+                <div style={{ fontSize: isMobile ? '13px' : 'var(--text-base)', fontWeight: 600, color: item.color }}>{item.value}</div>
               </div>
             ))}
           </div>
@@ -168,7 +191,7 @@ function PortfoliosClient({ initialHoldings }: { initialHoldings: Holding[] }) {
           </div>
 
           {/* Coverage + Strategy — side by side */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-5)', marginBottom: 'var(--space-6)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 'var(--space-5)', marginBottom: 'var(--space-6)' }}>
             {portfolio.coverage && portfolio.coverage.length > 0 && (
               <div>
                 <div className="eyebrow" style={{ marginBottom: 'var(--space-3)' }}>Coverage</div>
@@ -218,7 +241,7 @@ function PortfoliosClient({ initialHoldings }: { initialHoldings: Holding[] }) {
                 <span style={{ fontSize: '10px', opacity: 0.5 }}>Filler data — live soon</span>
               </div>
             </div>
-            <MiniChart data={perfData} accent={accent} />
+            <MiniChart data={perfData} accent={accent} isMobile={isMobile} />
           </div>
 
           <HoldingsTable holdings={holdings} />

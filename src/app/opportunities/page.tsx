@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Background from '@/components/Background';
 
 const ROLES = [
@@ -45,30 +45,38 @@ function LinkedInIcon() {
 }
 
 export default function OpportunitiesPage() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   return (
     <>
       <Background />
-      <main style={{ position: 'relative', zIndex: 1, paddingTop: '104px' }}>
+      <main style={{ position: 'relative', zIndex: 1, paddingTop: '104px', overflowX: 'hidden' }}>
         <div className="container" style={{ paddingTop: 'var(--space-3)', paddingBottom: 'var(--space-9)' }}>
 
           {/* Header */}
-          <div style={{ marginBottom: 'var(--space-7)' }}>
-            <div className="eyebrow" style={{ marginBottom: '6px' }}>Join SF Capital · Fund Year 2026</div>
-            <h1 style={{ fontSize: 'var(--text-3xl)', fontWeight: 800, letterSpacing: '-0.025em' }}>Opportunities</h1>
-            <p style={{ fontSize: 'var(--text-base)', color: 'var(--text-secondary)', marginTop: 'var(--space-3)', lineHeight: 1.8, maxWidth: '720px' }}>
+          <div style={{ marginBottom: isMobile ? 'var(--space-5)' : 'var(--space-7)' }}>
+            <div className="eyebrow" style={{ marginBottom: '6px', fontSize: isMobile ? '10px' : undefined }}>Join SF Capital · Fund Year 2026</div>
+            <h1 style={{ fontSize: isMobile ? '24px' : 'var(--text-3xl)', fontWeight: 800, letterSpacing: '-0.025em' }}>Opportunities</h1>
+            <p style={{ fontSize: isMobile ? '13px' : 'var(--text-base)', color: 'var(--text-secondary)', marginTop: 'var(--space-3)', lineHeight: 1.8, maxWidth: '720px' }}>
               SF Capital draws from a society of over 300 members, but the fund itself operates with just 15. We are recruiting <strong style={{ color: 'var(--text-primary)' }}>5 analysts per portfolio</strong>, across three independently managed books. Competition is high, and standards are even higher.
             </p>
           </div>
 
           {/* Role cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-5)', marginBottom: 'var(--space-4)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 'var(--space-5)', marginBottom: 'var(--space-4)' }}>
             {ROLES.map((role) => (
-              <div key={role.portfolio} style={{ background: 'var(--bg-raised)', border: '1px solid var(--border)', borderTop: `3px solid ${role.accent}`, borderRadius: '6px', padding: 'var(--space-5)', display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+              <div key={role.portfolio} style={{ background: 'var(--bg-raised)', border: '1px solid var(--border)', borderTop: `3px solid ${role.accent}`, borderRadius: '6px', padding: isMobile ? 'var(--space-4)' : 'var(--space-5)', display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
                 <div>
-                  <div className="eyebrow" style={{ marginBottom: '6px' }}>Analyst · {role.analysts} positions</div>
-                  <div style={{ fontSize: 'var(--text-base)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.3 }}>{role.portfolio}</div>
+                  <div className="eyebrow" style={{ marginBottom: '6px', fontSize: isMobile ? '9px' : undefined }}>Analyst · {role.analysts} positions</div>
+                  <div style={{ fontSize: isMobile ? '13px' : 'var(--text-base)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.3 }}>{role.portfolio}</div>
                 </div>
-                <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.7, margin: 0 }}>
+                <p style={{ fontSize: isMobile ? '12px' : 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.7, margin: 0 }}>
                   {role.description}
                 </p>
                 <div style={{ marginTop: 'auto', paddingTop: 'var(--space-3)', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -83,13 +91,13 @@ export default function OpportunitiesPage() {
           <hr style={{ border: 'none', borderTop: '1px solid var(--border)', marginBottom: 'var(--space-4)' }} />
 
           {/* Get Involved */}
-          <div style={{ marginBottom: 'var(--space-8)' }}>
-            <div className="eyebrow" style={{ marginBottom: 'var(--space-3)' }}>How to Apply</div>
-            <h2 style={{ fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, letterSpacing: '-0.025em', marginBottom: 'var(--space-6)', lineHeight: 1.2 }}>
+          <div style={{ marginBottom: isMobile ? 'var(--space-5)' : 'var(--space-8)' }}>
+            <div className="eyebrow" style={{ marginBottom: 'var(--space-3)', fontSize: isMobile ? '10px' : undefined }}>How to Apply</div>
+            <h2 style={{ fontSize: isMobile ? '20px' : 'clamp(24px, 3vw, 36px)', fontWeight: 700, letterSpacing: '-0.025em', marginBottom: isMobile ? 'var(--space-4)' : 'var(--space-6)', lineHeight: 1.2 }}>
               Get involved with the FXIA.
             </h2>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', marginBottom: 'var(--space-7)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 'var(--space-3)' : 'var(--space-4)', marginBottom: isMobile ? 'var(--space-5)' : 'var(--space-7)' }}>
               {[
                 {
                   n: '01',
@@ -107,11 +115,11 @@ export default function OpportunitiesPage() {
                   body: 'If you have questions or want to express early interest, reach out to a current member of the SF Capital team directly. We are always happy to talk to motivated students before applications open.',
                 },
               ].map(item => (
-                <div key={item.n} style={{ display: 'flex', gap: 'var(--space-4)', paddingBottom: 'var(--space-4)', borderBottom: '1px solid var(--border)' }}>
+                <div key={item.n} style={{ display: 'flex', gap: isMobile ? 'var(--space-3)' : 'var(--space-4)', paddingBottom: isMobile ? 'var(--space-3)' : 'var(--space-4)', borderBottom: '1px solid var(--border)' }}>
                   <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--accent-text)', fontVariantNumeric: 'tabular-nums', minWidth: '22px', paddingTop: '3px' }}>{item.n}</span>
                   <div>
-                    <div style={{ fontSize: 'var(--text-base)', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '6px' }}>{item.title}</div>
-                    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.75, margin: 0 }}>{item.body}</p>
+                    <div style={{ fontSize: isMobile ? '13px' : 'var(--text-base)', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '6px' }}>{item.title}</div>
+                    <p style={{ fontSize: isMobile ? '12px' : 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.75, margin: 0 }}>{item.body}</p>
                   </div>
                 </div>
               ))}
@@ -119,21 +127,21 @@ export default function OpportunitiesPage() {
 
             {/* Contact cards */}
             <div style={{ marginBottom: 'var(--space-4)' }}>
-              <div className="eyebrow" style={{ marginBottom: 'var(--space-3)' }}>Contact the team</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 320px))', gap: 'var(--space-4)' }}>
+              <div className="eyebrow" style={{ marginBottom: 'var(--space-3)', fontSize: isMobile ? '10px' : undefined }}>Contact the team</div>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, minmax(0, 320px))', gap: 'var(--space-4)' }}>
                 {CONTACTS.map(c => (
                   <a
                     key={c.name}
                     href={c.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 'var(--space-4)', background: 'var(--bg-raised)', border: '1px solid var(--border)', borderRadius: '6px', padding: 'var(--space-4) var(--space-5)', transition: 'border-color 0.15s' }}
+                    style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 'var(--space-4)', background: 'var(--bg-raised)', border: '1px solid var(--border)', borderRadius: '6px', padding: isMobile ? 'var(--space-3) var(--space-4)' : 'var(--space-4) var(--space-5)', transition: 'border-color 0.15s' }}
                     onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)')}
                     onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}
                   >
                     <div style={{ flexGrow: 1 }}>
-                      <div style={{ fontSize: 'var(--text-base)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '2px' }}>{c.name}</div>
-                      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', letterSpacing: '0.03em' }}>{c.title}</div>
+                      <div style={{ fontSize: isMobile ? '13px' : 'var(--text-base)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '2px' }}>{c.name}</div>
+                      <div style={{ fontSize: isMobile ? '10px' : 'var(--text-xs)', color: 'var(--text-tertiary)', letterSpacing: '0.03em' }}>{c.title}</div>
                     </div>
                     <LinkedInIcon />
                   </a>
@@ -147,13 +155,13 @@ export default function OpportunitiesPage() {
 
           {/* What we look for */}
           <div style={{ paddingTop: 'var(--space-5)' }}>
-            <h2 style={{ fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, letterSpacing: '-0.025em', marginBottom: 'var(--space-3)', lineHeight: 1.2 }}>
+            <h2 style={{ fontSize: isMobile ? '20px' : 'clamp(24px, 3vw, 36px)', fontWeight: 700, letterSpacing: '-0.025em', marginBottom: 'var(--space-3)', lineHeight: 1.2 }}>
               What We Look For
             </h2>
-            <p style={{ fontSize: 'var(--text-base)', color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-5)', maxWidth: '680px' }}>
+            <p style={{ fontSize: isMobile ? '13px' : 'var(--text-base)', color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-5)', maxWidth: '680px' }}>
               We value drive and curiosity over credentials. There is no required year level or GPA threshold. What we care about is whether you are genuinely engaged with markets and willing to put in the work.
             </p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: isMobile ? 'var(--space-2)' : 'var(--space-3)' }}>
               {[
                 'Genuine interest in financial markets and investment research',
                 'Analytical mindset with strong attention to detail',
@@ -163,8 +171,8 @@ export default function OpportunitiesPage() {
                 'Prior experience in trading competitions, financial modelling, or equity research is a plus',
               ].map((point, i) => (
                 <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--accent-text)', flexShrink: 0, marginTop: '9px' }} />
-                  <span style={{ fontSize: 'var(--text-base)', color: 'var(--text-secondary)', lineHeight: 1.7 }}>{point}</span>
+                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--accent-text)', flexShrink: 0, marginTop: isMobile ? '7px' : '9px' }} />
+                  <span style={{ fontSize: isMobile ? '12px' : 'var(--text-base)', color: 'var(--text-secondary)', lineHeight: 1.7 }}>{point}</span>
                 </li>
               ))}
             </ul>

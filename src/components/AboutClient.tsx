@@ -30,7 +30,7 @@ const FUND_TEAMS = [
 	},
 ];
 
-export default function AboutPage() {
+export default function AboutClient() {
 	const [isMobile, setIsMobile] = useState(false);
 	useEffect(() => {
 		const check = () => setIsMobile(window.innerWidth < 1024);
@@ -56,14 +56,14 @@ export default function AboutPage() {
 							SF Capital is the <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>flagship investment fund</strong> of the FXIA Society at the University of Sydney; a society with <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>over 300 members</strong>. The fund itself is a select group of students running <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>three live portfolios</strong> across equities, commodities, ETFs, and systematic strategies.
 						</p>
 						{!isMobile && (
-							<>
+							<React.Fragment>
 								<p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.85, margin: 0 }}>
 									SF Capital was founded in <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>2025</strong> with a singular purpose: to give university students the opportunity to <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>manage a real portfolio</strong> using real investment strategies. We believe the best way to learn finance is to <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>do it</strong>.
 								</p>
 								<p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.85, margin: 0 }}>
 									Our members span <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Finance, Economics, Computer Science, and Engineering</strong>; bringing diverse perspectives to every investment decision. We host <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>weekly research presentations</strong>, collaborate with industry mentors, and open applications each semester.
 								</p>
-							</>
+							</React.Fragment>
 						)}
 					</div>
 				</div>
@@ -97,7 +97,7 @@ export default function AboutPage() {
 					</div>
 
 					{/* Team columns */}
-					<div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: isMobile ? 'var(--space-5)' : 'var(--space-5)' }}>
+					<div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 'var(--space-5)' }}>
 						{FUND_TEAMS.map((team) => (
 							<div key={team.portfolio} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
 
