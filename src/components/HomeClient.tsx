@@ -165,7 +165,7 @@ export default function HomeClient({ holdings, perfHistory }: Props) {
                 A student-managed investment fund working with industry professionals to simulate a real portfolio management environment; equipping our members with investment experience and financial literacy to grow their own wealth, long after graduation.
               </p>
               <p style={{ fontSize: isMobile ? '11px' : 'var(--text-xs)', color: 'rgba(244,244,245,0.30)', lineHeight: 1.7, marginTop: 'var(--space-3)', paddingLeft: 'var(--space-4)', borderLeft: '2px solid rgba(155,18,57,0.2)' }}>
-                All capital deployed is strictly paper trading/ demo money only. SF Capital is affiliated with industry partners and sponsors, and operates in full compliance with USU regulations and Australian law. All research, analysis, and investment decisions are conducted solely to simulate professional industry practice.
+                All capital deployed is strictly paper trading/demo money only. SF Capital is affiliated with industry partners and sponsors, and operates in full compliance with USU regulations and Australian law. All research, analysis, and investment decisions are conducted solely to simulate professional industry practice.
               </p>
             </div>
 
@@ -236,55 +236,7 @@ export default function HomeClient({ holdings, perfHistory }: Props) {
         </div>
       </section>
 
-      {/* ── Our 2025 Performance ─────────────────────────────── */}
-      <section style={{ borderBottom: '1px solid var(--border)' }}>
-        <div className="container" style={{
-          paddingTop: isMobile ? 'var(--space-5)' : 'var(--space-9)',
-          paddingBottom: isMobile ? 'var(--space-5)' : 'var(--space-9)',
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: isMobile ? 'var(--space-4)' : 'var(--space-7)', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
-            <div>
-              <div className="eyebrow" style={{ marginBottom: 'var(--space-2)', fontSize: isMobile ? '10px' : 'var(--text-base)' }}>Historical</div>
-              <h2 style={{ fontSize: isMobile ? '20px' : 'clamp(28px, 4vw, 40px)', fontWeight: 700, letterSpacing: '-0.025em' }}>Our 2025 Performance.</h2>
-            </div>
-            <Link href="/performance" style={{ fontSize: isMobile ? '13px' : 'var(--text-sm)', color: 'var(--accent-text)', fontWeight: 500, borderBottom: '1px solid rgba(244,63,94,0.3)', paddingBottom: '1px' }}>
-              View full analytics →
-            </Link>
-          </div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-            gap: '1px',
-            background: 'var(--border)',
-            border: '1px solid var(--border)',
-            borderRadius: '10px',
-            overflow: 'hidden',
-            marginBottom: isMobile ? 'var(--space-4)' : 'var(--space-7)',
-          }}>
-            {[
-              { label: 'Total Return',  value: '+24.7%', sub: 'Mar – Dec 2025', positive: true  },
-              { label: 'vs S&P 500',    value: '+8.3%',  sub: 'outperformance', positive: true  },
-              { label: 'Max Drawdown',  value: '-6.1%',  sub: 'peak to trough', positive: false },
-              { label: 'Sharpe Ratio',  value: '1.84',   sub: 'risk-adjusted',  positive: true  },
-            ].map(m => (
-              <div key={m.label} style={{ background: 'var(--bg-raised)', padding: isMobile ? 'var(--space-3)' : 'var(--space-5)' }}>
-                <div style={{ fontSize: isMobile ? '9px' : 'var(--text-xs)', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 'var(--space-2)' }}>{m.label}</div>
-                <div style={{ fontSize: isMobile ? '18px' : 'clamp(22px, 2.5vw, 30px)', fontWeight: 800, letterSpacing: '-0.03em', color: m.positive ? 'var(--gain)' : 'var(--loss)', marginBottom: '4px', fontVariantNumeric: 'tabular-nums' }}>{m.value}</div>
-                <div style={{ fontSize: isMobile ? '10px' : 'var(--text-xs)', color: 'var(--text-muted)' }}>{m.sub}</div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ background: 'var(--bg-raised)', border: '1px solid var(--border)', borderRadius: '10px', padding: isMobile ? 'var(--space-5)' : 'var(--space-8)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-3)', minHeight: isMobile ? '100px' : '160px' }}>
-            <div style={{ fontSize: isMobile ? '24px' : '32px', opacity: 0.2 }}>📈</div>
-            <p style={{ color: 'var(--text-muted)', fontSize: isMobile ? '12px' : 'var(--text-sm)', margin: 0, textAlign: 'center' }}>2025 historical chart — data to be added.</p>
-            <Link href="/performance" style={{ color: 'var(--accent-text)', fontSize: isMobile ? '12px' : 'var(--text-sm)', borderBottom: '1px solid rgba(244,63,94,0.3)', paddingBottom: '1px' }}>
-              View full performance page →
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* ── Performance ── hidden until live data is available ─────────────── */}
 
     </main>
   );

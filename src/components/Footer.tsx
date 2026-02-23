@@ -52,7 +52,7 @@ export default function Footer() {
           {/* Disclaimer — centre column */}
           <div style={{ flex: 1, maxWidth: '380px', minWidth: '220px', marginRight: 'var(--space-7)' }}>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.7, opacity: 0.55, margin: 0 }}>
-              All capital deployed is strictly paper trading/ demo money only. SF Capital is affiliated with industry partners and sponsors, and operates in full compliance with USU regulations and Australian law. All research, analysis, and investment decisions are conducted solely to simulate professional industry practice.
+              All capital deployed is strictly paper trading/demo money only. SF Capital is affiliated with industry partners and sponsors, and operates in full compliance with USU regulations and Australian law. All research, analysis, and investment decisions are conducted solely to simulate professional industry practice.
             </p>
           </div>
 
