@@ -97,6 +97,28 @@ export default function HomeClient({ holdings, perfHistory }: Props) {
                 </a>
                 &apos;s flagship investment fund.
               </p>
+              {/* 2025 funds link */}
+              <Link
+                href="/performance/2025"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  marginTop: '14px',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.55)',
+                  textDecoration: 'none',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  borderRadius: '4px',
+                  padding: '5px 12px',
+                }}
+              >
+                <span style={{ color: '#f59e0b', fontSize: '9px' }}>●</span>
+                View our 2025 Fund Performance
+              </Link>
             </div>
             {/* Carousel — full width, no overflow */}
             <div style={{ width: '100%' }}>
@@ -136,6 +158,28 @@ export default function HomeClient({ holdings, perfHistory }: Props) {
                 </a>
                 &apos;s Flagship Investment Fund
               </p>
+              {/* 2025 funds link */}
+              <Link
+                href="/performance/2025"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  marginTop: '20px',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.50)',
+                  textDecoration: 'none',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  borderRadius: '4px',
+                  padding: '6px 14px',
+                }}
+              >
+                <span style={{ color: '#f59e0b', fontSize: '9px' }}>●</span>
+                View our 2025 Fund Performance
+              </Link>
             </div>
             <div style={{ paddingTop: '80px' }}>
               <HeroPortfolioCarousel />
